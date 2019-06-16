@@ -1,0 +1,13 @@
+{
+    "name": "ruano_a/access-limiter-bundle",
+    "description": "A symfony bundle to highly limit the access to a website, on a very restricted beta for instance.",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ruano-a",
+            "email": "aurelien.ruano@epitech.eu"
+        }
+    ],
+    "require": {}
+}
