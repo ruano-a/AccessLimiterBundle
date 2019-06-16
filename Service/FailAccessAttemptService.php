@@ -46,33 +46,15 @@ class FailAccessAttemptService
     }
 
     /*
-     * Log in file, not database
+     * Log in file, not database, the password too, since it's not personal.
      */
-    public function logFail(?User $user, string $username, Request $request)
+    public function logFail(Request $request, string $passwordSent)
     {
-        if ($user) // if the user exists
-        {
-            $superadmin = false;
-
-            if (($superadmin = in_array('ROLE_SUPER_ADMIN', $user->getRoles())) //if he is an admin or superadmin
-                || in_array('ROLE_ADMIN', $user->getRoles()))
-            {
-                $role = $superadmin ? 'SUPERADMIN' : 'ADMIN';
-                $this->logger_admins->info('[Fail login ' . $role . '][' . $request->getClientIp() . ']: ' . $user->getUsername());
-            }
-            else
-            {
-                $this->logger_users->info('[Fail login USER][' . $request->getClientIp() .']: ' . $user->getUsername());
-            }
-        }
-        else
-        {
-            $this->logger_users->info('[Fail login UNEXISTING USER][' . $request->getClientIp() . ']: ' . $username);
-        }
+        $this->logger->info('[Fail access][' . $request->getClientIp() . ']: ' . $passwordSent);
     }
 
-    public function clearFails($user, $ip)
+    public function clearFails($ip)
     {
-        $failLoginAttempt = $this->repo->clearFailLoginAttempts($user, $ip);
+        $this->repo->clearFailAccessAttempts($ip);
     }
 }

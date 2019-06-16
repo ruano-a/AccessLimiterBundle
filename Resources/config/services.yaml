@@ -1,0 +1,4 @@
+services:
+    ruano-a\AccessLimiterBundle\EventListener\RequestListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, priority: 0}

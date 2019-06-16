@@ -7,6 +7,12 @@
 		</style>
 	</head>
 	<body>
-
+		{% if we are in password mode %}
+		<div id="wrapper">
+			<form name="access" action="/"> {% the url doesn't matter %}
+				<label>Password: </label><input type="text" name="password">
+			</form>
+		</div>
+		{% endif %}
 	</body>
 </html>
