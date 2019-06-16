@@ -9,5 +9,10 @@
             "email": "aurelien.ruano@epitech.eu"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "ruano_a\\AccessLimiterBundle\\": "src/"
+        }
+    }
 }
