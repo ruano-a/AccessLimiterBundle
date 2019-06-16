@@ -1,6 +1,6 @@
 <?php
 
-namespace ruano-a\AccessLimiterBundle\EventListener;
+namespace ruano_a\AccessLimiterBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;

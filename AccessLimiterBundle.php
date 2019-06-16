@@ -1,6 +1,6 @@
 <?php
 
-namespace ruano-a\AccessLimiterBundle;
+namespace ruano_a\AccessLimiterBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

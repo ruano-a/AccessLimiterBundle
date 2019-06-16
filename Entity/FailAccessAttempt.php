@@ -1,6 +1,6 @@
 <?php
 
-namespace ruano-a\AccessLimiterBundle\Entity;
+namespace ruano_a\AccessLimiterBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;

@@ -1,11 +1,11 @@
 <?php 
 
-namespace ruano-a\AccessLimiterBundle\Service;
+namespace ruano_a\AccessLimiterBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Psr\Log\LoggerInterface;
-use ruano-a\AccessLimiterBundle\Entity\FailAccessAttempt;
+use ruano_a\AccessLimiterBundle\Entity\FailAccessAttempt;
 
 class FailAccessAttemptService
 {

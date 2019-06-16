@@ -1,8 +1,8 @@
 <?php
 
-namespace ruano-a\AccessLimiterBundle\Repository;
+namespace ruano_a\AccessLimiterBundle\Repository;
 
-use ruano-a\AccessLimiterBundle\Entity\FailAccessAttempt;
+use ruano_a\AccessLimiterBundle\Entity\FailAccessAttempt;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
