@@ -12,7 +12,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "ruano_a\\AccessLimiterBundle\\": "src/"
+            "ruano_a\\AccessLimiterBundle\\": ""
         }
     }
 }
