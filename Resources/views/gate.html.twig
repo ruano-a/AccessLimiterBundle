@@ -4,13 +4,22 @@
 		<meta charset="utf-8">
 		<title>Gate</title>
 		<style>
+				#wrapper
+				{
+					margin-top: 45vh;
+				}
+				#form
+				{
+					text-align: center;
+				}
 		</style>
 	</head>
 	<body>
 		{% if true %}{# if we are in password mode #}
 		<div id="wrapper">
-			<form name="access" action="/"> {# the url doesn't matter #}
-				<label>Password: </label><input type="text" name="password">
+			<form id="form" method="post" name="access" action="/"> {# the url doesn't matter #}
+				<label>Password: </label><br>
+				<input type="text" name="password">
 			</form>
 		</div>
 		{% endif %}
