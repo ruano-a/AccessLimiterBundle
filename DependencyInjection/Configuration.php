@@ -20,6 +20,9 @@ class Configuration implements ConfigurationInterface
                 ->booleanNode('active')
                     ->defaultTrue()
                 ->end()
+                ->scalarNode('template_path')
+                    ->defaultValue('@AccessLimiter/gate.html.twig')
+                ->end()
             ->end()
         ;
 

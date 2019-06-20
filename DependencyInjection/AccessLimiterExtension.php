@@ -19,5 +19,6 @@ class AccessLimiterExtension extends ConfigurableExtension
     	$loader->load('services.yaml');
     	$container->setParameter('access_limiter.passwords', $mergedConfig['passwords']);
     	$container->setParameter('access_limiter.active', $mergedConfig['active']);
+    	$container->setParameter('access_limiter.template_path', $mergedConfig['template_path']);
     }
 }

@@ -13,18 +13,19 @@ class RequestListener
     private $failAccessAttemptService;
     private $passwords;
     private $active;
+    private $templatePath;
 
-    const VIEW_PATH = '@AccessLimiter/gate.html.twig';
     const SESSION_VAR = 'AccessLimiter_ALLOWED';
-    const PASSWORD_VAR_NAME = 'password';
+    const PASSWORD_INPUT_NAME = 'password';
 
     public function __construct(Environment $templating, FailAccessAttemptService $failAccessAttemptService,
-                                 array $passwords, bool $active)
+                                 array $passwords, bool $active, string $templatePath)
     {
         $this->templating = $templating;
         $this->failAccessAttemptService = $failAccessAttemptService;
         $this->passwords = $passwords;
         $this->active = $active;
+        $this->templatePath = $templatePath;
     }
 
     protected function isAllowed($request)
@@ -39,7 +40,7 @@ class RequestListener
 
     protected function getResponse(string $errorMessage = null)
     {
-        return new Response($this->templating->render(self::VIEW_PATH, ['error' => $errorMessage]));
+        return new Response($this->templating->render($this->templatePath, ['error' => $errorMessage]));
     }
 
     protected function checkPassword(string $password)
@@ -50,12 +51,12 @@ class RequestListener
     protected function containsFormData($request)
     {
         // todo, see the dump of the request
-        return ($request->request->get(self::PASSWORD_VAR_NAME) != null);
+        return ($request->request->get(self::PASSWORD_INPUT_NAME) != null);
     }
 
     protected function getPassword($request)
     {
-        return ($request->request->get(self::PASSWORD_VAR_NAME));
+        return ($request->request->get(self::PASSWORD_INPUT_NAME));
     }
 
     protected function isActive()

@@ -17,3 +17,4 @@ services:
         arguments:
             $passwords: '%access_limiter.passwords%'
             $active: '%access_limiter.active%'
+            $templatePath: '%access_limiter.template_path%'
