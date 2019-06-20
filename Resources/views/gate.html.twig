@@ -1,7 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Gate</title>
 		<style>
 				#wrapper
@@ -18,8 +20,9 @@
 		{% if true %}{# if we are in password mode #}
 		<div id="wrapper">
 			<form id="form" method="post" name="access" action="/"> {# the url doesn't matter #}
+				{% if error is defined and error is not empty %}<p style="color: red;">{{ error }}</p>{% endif %}
 				<label>Password: </label><br>
-				<input type="text" name="password">
+				<input type="password" name="password">
 			</form>
 		</div>
 		{% endif %}

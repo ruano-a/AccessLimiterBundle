@@ -9,26 +9,27 @@ use Twig\Environment;
 class RequestListener
 {
     private $templating;
+    private $passwords;
+    private $active;
     const VIEW_PATH = '@AccessLimiter/gate.html.twig';
     const SESSION_VAR = 'AccessLimiter_ALLOWED';
+    const PASSWORD_VAR_NAME = 'password';
 
-    public function __construct(Environment $templating)
+    public function __construct(Environment $templating, array $passwords, bool $active)
     {
         $this->templating = $templating;
+        $this->passwords = $passwords;
+        $this->active = $active;
     }
 
-    protected function isAllowed()
+    protected function isAllowed($request)
     {
-       $session = null;
-
-       //return ($session->get(self::SESSION_VAR));
-       return (false);
+        return ($request->getSession()->get(self::SESSION_VAR) == true);
     }
 
-    protected function setAllowed()
+    protected function setAllowed($request)
     {
-        $session = truc;
-        $session->set(self::SESSION_VAR, true);
+        $request->getSession()->set(self::SESSION_VAR, true);
     }
 
     protected function getResponse(string $errorMessage = null)
@@ -38,22 +39,23 @@ class RequestListener
 
     protected function checkPassword(string $password)
     {
-        $passwords = STUFF;
-
-        return (in_array($password, $passwords));
-        return (false);
+        return (in_array($password, $this->passwords));
     }
 
     protected function containsFormData($request)
     {
         // todo, see the dump of the request
-        return (false);
+        return ($request->request->get(self::PASSWORD_VAR_NAME) != null);
+    }
+
+    protected function getPassword($request)
+    {
+        return ($request->request->get(self::PASSWORD_VAR_NAME));
     }
 
     protected function isActive()
     {
-        //return ($activeParam);
-        return (true);
+        return ($this->active);
     }
 
     // for now, let's say it's only by password
@@ -62,9 +64,9 @@ class RequestListener
         $request = $event->getRequest();
         if ($this->containsFormData($request))
         {
-            if ($this->checkPassword($request->getPassword()))
+            if ($this->checkPassword($this->getPassword($request)))
             {
-                $this->setAllowed();
+                $this->setAllowed($request);
             }
             else
             {
@@ -79,7 +81,7 @@ class RequestListener
     
     public function onKernelRequest(GetResponseEvent $event)
     {
-        if (!$this->isActive() || !$event->isMasterRequest() || $this->isAllowed()) {
+        if (!$this->isActive() || !$event->isMasterRequest() || $this->isAllowed($event->getRequest())) {
             // don't do anything if it's not the master request
             return;
         }

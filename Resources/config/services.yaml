@@ -9,3 +9,6 @@ services:
     ruano_a\AccessLimiterBundle\EventListener\RequestListener:
         tags:
             - { name: kernel.event_listener, event: kernel.request, priority: 0}
+        arguments:
+            $passwords: '%access_limiter.passwords%'
+            $active: '%access_limiter.active%'
