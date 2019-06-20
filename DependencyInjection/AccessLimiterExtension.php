@@ -20,5 +20,6 @@ class AccessLimiterExtension extends ConfigurableExtension
     	$container->setParameter('access_limiter.passwords', $mergedConfig['passwords']);
     	$container->setParameter('access_limiter.active', $mergedConfig['active']);
     	$container->setParameter('access_limiter.template_path', $mergedConfig['template_path']);
+    	$container->setParameter('access_limiter.listener_priority', $mergedConfig['listener_priority']);
     }
 }

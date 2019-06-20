@@ -13,7 +13,7 @@ services:
 
     ruano_a\AccessLimiterBundle\EventListener\RequestListener:
         tags:
-            - { name: kernel.event_listener, event: kernel.request, priority: 0}
+            - { name: kernel.event_listener, event: kernel.request, priority: '%access_limiter.listener_priority%'}
         arguments:
             $passwords: '%access_limiter.passwords%'
             $active: '%access_limiter.active%'
