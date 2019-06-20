@@ -26,7 +26,7 @@ class FailAccessAttemptService
     {
         $beginDate = new \DateTime();
         $beginDate->modify('-'.self::BAN_DURATION_MN.' minutes');
-        $failAccessAttempt = $this->repo->getFailAccessAttemptsFrom($user, $ip, $beginDate);
+        $failAccessAttempt = $this->repo->getFailAccessAttemptsFrom($ip, $beginDate);
 
         return ($failAccessAttempt && $failAccessAttempt->getNbFails() >= self::MAX_ATTEMPT);
     }

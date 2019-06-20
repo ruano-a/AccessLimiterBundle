@@ -71,19 +71,19 @@ class RequestListener
 
         if ($this->containsFormData($request))
         {
-            if ($failAccessAttemptService->hasFailedTooManyTimes($ip))
+            if ($this->failAccessAttemptService->hasFailedTooManyTimes($ip))
             {
-                $event->setResponse($this->getResponse('Too many tries'));
+                $event->setResponse($this->getResponse('Too many attempts'));
             }
             else if ($this->checkPassword($this->getPassword($request)))
             {
                 $this->setAllowed($request);
-                $failAccessAttemptService->clearFails($ip);
+                $this->failAccessAttemptService->clearFails($ip);
             }
             else
             {
-                $failAccessAttemptService->noteFail($ip);
-                $failAccessAttemptService->logFail($request, $this->getPassword($request));
+                $this->failAccessAttemptService->noteFail($ip);
+                $this->failAccessAttemptService->logFail($request, $this->getPassword($request));
                 $event->setResponse($this->getResponse('Wrong password'));
             }
         }

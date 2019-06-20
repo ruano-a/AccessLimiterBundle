@@ -5,6 +5,11 @@ services:
         public: false       # Allows optimizing the container by removing unused services; this also means
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
+    # makes classes in / available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    ruano_a\AccessLimiterBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Migrations,Tests,Kernel.php}'
 
     ruano_a\AccessLimiterBundle\EventListener\RequestListener:
         tags:
