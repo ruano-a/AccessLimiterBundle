@@ -2,6 +2,7 @@
 
 namespace ruano_a\AccessLimiterBundle\EventListener;
 
+use ruano_a\AccessLimiterBundle\Service\FailAccessAttemptService;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
@@ -9,15 +10,19 @@ use Twig\Environment;
 class RequestListener
 {
     private $templating;
+    private $failAccessAttemptService;
     private $passwords;
     private $active;
+
     const VIEW_PATH = '@AccessLimiter/gate.html.twig';
     const SESSION_VAR = 'AccessLimiter_ALLOWED';
     const PASSWORD_VAR_NAME = 'password';
 
-    public function __construct(Environment $templating, array $passwords, bool $active)
+    public function __construct(Environment $templating, FailAccessAttemptService $failAccessAttemptService,
+                                 array $passwords, bool $active)
     {
         $this->templating = $templating;
+        $this->failAccessAttemptService = $failAccessAttemptService;
         $this->passwords = $passwords;
         $this->active = $active;
     }
@@ -62,14 +67,23 @@ class RequestListener
     protected function handleNotAllowedRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();
+        $ip = $request->getClientIp();
+
         if ($this->containsFormData($request))
         {
-            if ($this->checkPassword($this->getPassword($request)))
+            if ($failAccessAttemptService->hasFailedTooManyTimes($ip))
+            {
+                $event->setResponse($this->getResponse('Too many tries'));
+            }
+            else if ($this->checkPassword($this->getPassword($request)))
             {
                 $this->setAllowed($request);
+                $failAccessAttemptService->clearFails($ip);
             }
             else
             {
+                $failAccessAttemptService->noteFail($ip);
+                $failAccessAttemptService->logFail($request, $this->getPassword($request));
                 $event->setResponse($this->getResponse('Wrong password'));
             }
         }
