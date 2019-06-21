@@ -8,7 +8,7 @@ An incoming visitor will see a simple page with a password field. If a correct p
 composer require ruano_a/access-limiter-bundle
 ~~~~
 
-Add the bundle in Kernel.php, update the database.
+Add the bundle in bundles.php, update the database (for the fails of passwords).
 
 Then create a access_limiter.yaml file in the config/packages directory.
 
