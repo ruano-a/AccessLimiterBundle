@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * FailAccessAttempt
  *
- * @ORM\Table(name="AccessLimiter_FailAccessAttempt")
+ * @ORM\Table(name="accesslimiter_fail_access_attempt")
  * @ORM\Entity(repositoryClass="ruano_a\AccessLimiterBundle\Repository\FailAccessAttemptRepository")
  */
 class FailAccessAttempt
