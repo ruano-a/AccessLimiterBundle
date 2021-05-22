@@ -3,7 +3,8 @@
 namespace ruano_a\AccessLimiterBundle\EventListener;
 
 use ruano_a\AccessLimiterBundle\Service\FailAccessAttemptService;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
@@ -28,44 +29,44 @@ class RequestListener
         $this->templatePath = $templatePath;
     }
 
-    protected function isAllowed($request)
+    protected function isAllowed(Request $request): bool
     {
         return ($request->getSession()->get(self::SESSION_VAR) == true);
     }
 
-    protected function setAllowed($request)
+    protected function setAllowed(Request $request): void
     {
         $request->getSession()->set(self::SESSION_VAR, true);
     }
 
-    protected function getResponse(string $errorMessage = null)
+    protected function getResponse(string $errorMessage = null): Response
     {
         return new Response($this->templating->render($this->templatePath, ['error' => $errorMessage]));
     }
 
-    protected function checkPassword(string $password)
+    protected function checkPassword(string $password): bool
     {
         return (in_array($password, $this->passwords));
     }
 
-    protected function containsFormData($request)
+    protected function containsFormData(Request $request): bool
     {
         // todo, see the dump of the request
         return ($request->request->get(self::PASSWORD_INPUT_NAME) != null);
     }
 
-    protected function getPassword($request)
+    protected function getPassword(Request $request): ?string
     {
         return ($request->request->get(self::PASSWORD_INPUT_NAME));
     }
 
-    protected function isActive()
+    protected function isActive(): bool
     {
         return ($this->active);
     }
 
     // for now, let's say it's only by password
-    protected function handleNotAllowedRequest(GetResponseEvent $event)
+    protected function handleNotAllowedRequest(GetResponseEvent $event): void
     {
         $request = $event->getRequest();
         $ip = $request->getClientIp();
@@ -94,7 +95,7 @@ class RequestListener
         }
     }
     
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(RequestEvent $event): void
     {
         if (!$this->isActive() || !$event->isMasterRequest() || $this->isAllowed($event->getRequest())) {
             // don't do anything if it's not the master request
