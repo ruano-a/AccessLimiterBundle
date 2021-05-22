@@ -66,7 +66,7 @@ class RequestListener
     }
 
     // for now, let's say it's only by password
-    protected function handleNotAllowedRequest(GetResponseEvent $event): void
+    protected function handleNotAllowedRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
         $ip = $request->getClientIp();

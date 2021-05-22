@@ -4,7 +4,7 @@ namespace ruano_a\AccessLimiterBundle\Repository;
 
 use ruano_a\AccessLimiterBundle\Entity\FailAccessAttempt;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 class FailAccessAttemptRepository extends ServiceEntityRepository
 {    
